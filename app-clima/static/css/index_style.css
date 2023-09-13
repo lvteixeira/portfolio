@@ -1,0 +1,125 @@
+/*
+body {
+    background-color: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    margin: 0;
+    padding: 20px;
+
+}
+*/
+body {
+    background-color: #8d9978;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 45%;
+    height: fit-content;
+    margin-left: 28%;
+}
+
+header {
+    /*background-color: #7bae96;*/
+    margin-left: -60px;
+    padding: 20px;
+    /*position: fixed;*/
+    /*top: 0;
+    left: 10;*/
+    max-width: 80%;
+    width: 80%;
+    height: fit-content;
+    border-radius: 10px;
+    *z-index: 999;
+}
+
+#hero {
+    background-color: #8d9970;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 0vh;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 100%;
+    width: 100%;
+    height: fit-content;
+    text-align: center;
+    justify-content: center;
+    align-items: center; /* Centraliza verticalmente */
+}
+
+.search_area {
+    background-color: #cbb244;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 60%;
+    width: 60%;
+    height: fit-content;
+    padding: 20px;
+    margin-left: -25px;
+    text-align: center;
+}
+
+.search_area input[type="text"] {
+    /*display: flex;*/
+    justify-content: center;
+    align-items: center; /* Centraliza verticalmente */
+    text-align: center;
+    max-width: 50%;
+    width: 50%; /* Defina a largura desejada */
+    height: fit-content; /* Defina a altura desejada */
+    border-radius: 4px; /* Defina o raio desejado para as bordas */
+    border-style: solid
+}
+
+.search_area button[type="submit"] {
+    max-width: 70px;
+    max-height: 30px;
+    width: 70px;
+    height: 30px;
+    margin-top: 4px;
+    margin-left: -10px;
+    background-color: #7bae96; /* Defina a cor de fundo desejada */
+    color: white; /* Defina a cor do texto desejada */
+    border-radius: 4px; /* Defina o raio desejado para as bordas */
+    border-style: solid;
+}
+
+.card {
+    background-color: #4a564d;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 260px;
+    max-height: 315px;
+    width: 260px;
+    height: 315px;
+    margin-top: 40px;
+    margin-left: -31px;
+    padding: 20px;
+    text-align: center;
+}
+  
+.icon {
+    margin-bottom: 20px;
+}
+  
+.temperature {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+  
+.description {
+    color: #888;
+}
+  
+p {
+    margin: 0;
+}
+  
+img {
+    max-width: 100px;
+} 

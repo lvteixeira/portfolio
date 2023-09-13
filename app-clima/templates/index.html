@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Weather App</title>
+  <link href="{{ url_for('static', filename='css/index_style.css') }}" rel="stylesheet">
+</head>
+<body>
+    <header>
+    <div id="hero">
+        <h1>Weather App</h1>
+    </div>
+    </header>
+    <div class="search_area">
+        <div class="search_box">
+            <h3>Como está o clima?</h3>
+            <p>Basta digitar o nome da cidade e a nossa API buscará os dados do clima atualizados.</p><br>
+            <form action="{{ 'http://localhost:8080/weather/name' }}" method="post">
+            <input type="text" id="search_city" name="city_name" placeholder="Nome da cidade" required><br>
+            <button type="submit">search</button>
+            </form>
+            {% if 'status' not in search_data.search_result %}
+                <script></script>
+            {% else %}
+                {% if 'erro404' in search_data.search_result.status %}
+                    <script>
+                        alert("Cidade não encontrada!")
+                    </script>
+                {% else %}
+                    <script></script>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="card">
+        <div class="name">
+            {% if 'nome' in search_data.search_result %}
+                <h2>{{ search_data.search_result.nome }}</h2>
+            {% else %}
+                <h2>New York</h2>
+            {% endif %}
+        </div>
+        <div class="icon">
+            {% if 'descricao' not in search_data.search_result %}
+                <img src="{{ url_for('static', filename='img/clear.png') }}" alt="Clear">
+            {% else %}
+                {% if 'nuvens' in search_data.search_result.descricao or 'nublado' in search_data.search_result.descricao %}
+                    <img src="{{ url_for('static', filename='img/clouds.png') }}" alt="Clouds">
+                {% endif %}
+
+                {% if 'chuva' in search_data.search_result.descricao or 'tempestade' in search_data.search_result.descricao %}
+                    <img src="{{ url_for('static', filename='img/rain.png') }}" alt="Rain">
+                {% endif %}
+
+                {% if 'limpo' in search_data.search_result.descricao %}
+                    <img src="{{ url_for('static', filename='img/clear.png') }}" alt="Clear">
+                {% endif %}
+            {% endif %}
+        </div>
+        <div class="temperature">
+            {% if 'temp_atual' in search_data.search_result %}
+                <h2>{{ search_data.search_result.temp_atual }}°C</h2>
+            {% else %}
+                <h2>20°C</h2>
+            {% endif %}
+        </div>
+        <div class="description">
+            {%if 'descricao' in search_data.search_result %}
+                <p>{{ search_data.search_result.descricao }}</p>
+            {% else %}
+                <p>céu limpo</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
