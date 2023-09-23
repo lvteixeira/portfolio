@@ -1,44 +1,53 @@
 <!DOCTYPE html>
-<html>
+<html data-theme="cupcake">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Weather App</title>
-  <link href="{{ url_for('static', filename='css/index_style.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/output.css') }}" rel="stylesheet">
 </head>
-<body>
+<body class="flex flex-col justify-center items-center">
+    <!-- hero -->
     <header>
-    <div id="hero">
+    <div id="hero" class="text-xl">
         <h1>Weather App</h1>
     </div>
     </header>
-    <div class="search_area">
-        <div class="search_box">
-            <h3>Como está o clima?</h3>
-            <p>Basta digitar o nome da cidade e a nossa API buscará os dados do clima atualizados.</p><br>
-            <form action="{{ 'http://localhost:8080/weather/name' }}" method="post">
-            <input type="text" id="search_city" name="city_name" placeholder="Nome da cidade" required><br>
-            <button type="submit">search</button>
-            </form>
-            {% if 'status' not in search_data.search_result %}
-                <script></script>
+    <!-- hero -->
+
+    <!-- search area -->
+    <div class="p-4 rounded-lg text-center mb-4">
+        <h3>Como está o clima?</h3>
+        <p class="text-accent-focus text-justify">Basta digitar o nome da cidade e a nossa API buscará os dados do clima atualizados.</p><br>
+        <form class="flex justify-center items-center" action="{{ 'http://localhost:8080/weather/name' }}" method="post">
+        <input type="text" class="text-content px-4 py-2 border rounded-sm focus:outline-none mr-2 w-55 h-7" id="search_city" name="city_name" placeholder="Nome da cidade" required><br>
+        <button class="btn btn-primary btn-xs" type="submit">search</button>
+        </form>
+        {% if 'status' not in search_data.search_result %}
+            <script></script>
+        {% else %}
+            {% if 'erro404' in search_data.search_result.status %}
+                <script>
+                    alert("Cidade não encontrada!")
+                </script>
             {% else %}
-                {% if 'erro404' in search_data.search_result.status %}
-                    <script>
-                        alert("Cidade não encontrada!")
-                    </script>
-                {% else %}
-                    <script></script>
-                {% endif %}
+                <script></script>
             {% endif %}
-        </div>
+        {% endif %}
     </div>
-    <div class="card">
-        <div class="name">
+    <!-- search area -->
+
+    <!-- card -->
+    <div class="p-4 rounded-lg text-center bg-sky-200 mb-4">
+        <!-- name -->
+        <div class="text-primary-focus text-xl">
             {% if 'nome' in search_data.search_result %}
                 <h2>{{ search_data.search_result.nome }}</h2>
             {% else %}
                 <h2>New York</h2>
             {% endif %}
         </div>
+        <!-- icon -->
         <div class="icon">
             {% if 'descricao' not in search_data.search_result %}
                 <img src="{{ url_for('static', filename='img/clear.png') }}" alt="Clear">
@@ -56,7 +65,8 @@
                 {% endif %}
             {% endif %}
         </div>
-        <div class="temperature">
+        <!-- temperature -->
+        <div class="text-secondary-focus text-lg">
             {% if 'temp_atual' in search_data.search_result %}
                 <h2>{{ search_data.search_result.temp_atual }}°C</h2>
             {% else %}
@@ -71,5 +81,6 @@
             {% endif %}
         </div>
     </div>
+    <!-- card -->
 </body>
 </html>

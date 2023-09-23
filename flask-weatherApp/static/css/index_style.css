@@ -55,7 +55,7 @@ header {
     width: 50%;
     height: fit-content;
     border-radius: 4px;
-    border-style: solid;
+    border-style: solid
 }
 
 .search_area button[type="submit"] {
@@ -66,7 +66,7 @@ header {
     margin-top: 4px;
     margin-left: -10px;
     background-color: #7bae96;
-    color: white; /* cor do texto */
+    color: white;
     border-radius: 4px;
     border-style: solid;
 }

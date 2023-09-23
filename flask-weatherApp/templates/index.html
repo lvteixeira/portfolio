@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html data-theme="cupcake">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link href="{{ url_for('static', filename='css/output.css') }}" rel="stylesheet">
+</head>
+<body class="bg-gray-300 flex flex-col justify-center items-center h-screen">
+    <!--hero-->
+    <header>
+    <div class="hero bg-transparent">
+        <div class="hero-content text-center">
+            <div class="max-w-lg">
+                <h1 class="text-5xl font-bold">Weather App</h1>
+                <p class="py-4">Como está o clima?</p>
+                <p class="py-1 font-semibold text-accent-focus">Basta digitar o nome da cidade e a nossa API buscará os dados do clima atualizados.</p>
+            </div>
+        </div>
+    </div>
+    </header>
+    <!--hero-->
+
+    <!--search area-->
+    <form class="flex items-center mb-5" action="{{ 'http://localhost:8080/weather/name' }}" method="post">
+        <input type="text" placeholder="Buscar cidade" class="input input-secondary w-full max-w-xs mr-2" id="search_city" name="city_name" required>
+        <button class="bg-primary px-4 py-3 text-center text-sm font-semibold inline-block text-white cursor-pointer uppercase transition duration-200 ease-in-out rounded-md hover:bg-primary-focus focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 active:scale-95" type="submit">Buscar</button>       
+    </form>
+    {% if 'status' not in search_data.search_result %}
+        <script></script>
+    {% else %}
+        {% if 'erro404' in search_data.search_result.status %}
+            <script>alert("Cidade não encontrada!")</script>
+        {% else %}
+            <script></script>
+        {% endif %}
+    {% endif %}
+    <!--search area-->
+
+    <!--card-->
+    <div class="card bg-gradient-to-r from-primary to-secondary text-white shadow-2xl mb-4" style="height: 400px;width: 300px;">
+        <div class="card-body">
+            <!--city_name-->
+            {% if 'nome' in search_data.search_result %}
+                <h2 class="text-2xl text-center font-bold mb-5">{{ search_data.search_result.nome }}</h2>
+            {% else %}
+                <h2 class="text-2xl text-center font-bold mb-5">New York</h2>
+            {% endif %}
+
+            <!--icon-->
+            {% if 'descricao' not in search_data.search_result %}
+                <img src="{{ url_for('static', filename='img/clear.png') }}" alt="Clear" style="max-width: 120px; margin: 0 auto; display: block;">
+            {% else %}
+                {% if 'nuvens' in search_data.search_result.descricao or 'nublado' in search_data.search_result.descricao %}
+                    <img src="{{ url_for('static', filename='img/clouds.png') }}" alt="Clouds" style="max-width: 120px; margin: 0 auto; display: block;">
+                {% endif %}
+
+                {% if 'chuva' in search_data.search_result.descricao or 'tempestade' in search_data.search_result.descricao %}
+                    <img src="{{ url_for('static', filename='img/rain.png') }}" alt="Rain" style="max-width: 120px; margin: 0 auto; display: block;">
+                {% endif %}
+
+                {% if 'limpo' in search_data.search_result.descricao %}
+                    <img src="{{ url_for('static', filename='img/clear.png') }}" alt="Clear" style="max-width: 120px; margin: 0 auto; display: block;">
+                {% endif %}
+            {% endif %}
+
+            <!--temperature-->
+            {% if 'temp_atual' in search_data.search_result %}
+                <p class="text-primary-content text-center font-semibold text-lg">{{ search_data.search_result.temp_atual }}°C</p>
+            {% else %}
+                <p class="text-primary-content text-center font-semibold text-lg">20°C</p>
+            {% endif %}
+
+            <!--description-->
+            {% if 'descricao' in search_data.search_result %}
+                <p class="text-gray-500 text-center font-semibold text-lg mb-5">{{ search_data.search_result.descricao }}</p>
+            {% else %}
+                <p class="text-gray-500 text-center font-semibold text-lg mb-5">céu limpo</p>
+            {% endif %}
+        </div>
+    </div>
+    <!--card-->
+</body>
+</html>

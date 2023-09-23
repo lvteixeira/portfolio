@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Weather App</title>
+    <link href="{{ url_for('static', filename='css/index_style.css') }}" rel="stylesheet">
+</head>
+<body>
+        <div class="hero">
+            <h1>Weather App</h1>
+        </div>
+
+        <div class="search_area">
+            <div id="search_box">
+                <h3>Como está o clima?</h3>
+                <form action="{{ 'http://localhost:8080/weather/name' }}" method="post">
+                <input type="text" id="search_city" name="city_name" placeholder="Insira o nome de uma cidade" required><br>
+                <button type="submit">search</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card_area">
+            <div id="weather_info">
+                    <br>
+                    {% for _ in search_data.values() %}
+                      {{ _ }}
+                    {% endfor %}
+            </div>
+        </div>
+    <footer></footer>
+</body>
+</html>

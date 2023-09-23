@@ -1,0 +1,31 @@
+from flask import Flask, render_template, request
+from util import search
+
+'''flask app'''
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return render_template('index.html', search_data=search_data)
+
+
+@app.route('/weather/geo/<float(signed=True):user_lat>/<float(signed=True):user_lon>')
+def geo_weather(user_lat, user_lon):
+    return search.weather_by_geolocation(user_lat, user_lon)
+
+
+@app.route('/weather/name/', methods=["POST"])
+def city_weather():
+    user_city_name = request.form['city_name']
+    search_data['search_result'] = search.weather_by_city_name(user_city_name)
+    return render_template('index.html', search_data=search_data)
+
+"""
+@app.route('/weather/name/<user_city_name>')
+def city_weather(user_city_name):
+    return clima.weather_by_city_name(user_city_name)
+"""
+if __name__ == '__main__':
+    search_data = dict({'search result': {'nome': '', 'descricao': '', 'temp_atual': ''}})
+    app.run(debug=True, port=8080, host='localhost')

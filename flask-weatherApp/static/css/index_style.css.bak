@@ -1,0 +1,42 @@
+.hero {
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+}
+
+.search_area {
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+    text-align: center;
+}
+
+.card_area {
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+    text-align: center;
+}
+
+.search_area input[type="text"] {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Centraliza verticalmente */
+    text-align: center;
+    width: 600px; /* Defina a largura desejada */
+    height: 30px; /* Defina a altura desejada */
+    border-radius: 4px; /* Defina o raio desejado para as bordas */
+    border-style: solid
+}
+
+.search_area button[type="submit"] {
+    justify-content: center;
+    align-items: center; /* Centraliza verticalmente */
+    text-align: center;
+    width: 70px;
+    height: 30px;
+    background-color: #4CAF50; /* Defina a cor de fundo desejada */
+    color: white; /* Defina a cor do texto desejada */
+    border-radius: 4px; /* Defina o raio desejado para as bordas */
+    border-style: solid
+}
