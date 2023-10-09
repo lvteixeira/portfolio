@@ -1,0 +1,43 @@
+/*
+package com.acme.toDoList.service;
+
+import com.acme.toDoList.dto.UserDTO;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class UserService {
+    private ArrayList<UserDTO> users = new ArrayList<>();
+
+    private int nextId = 1;
+
+    public List<UserDTO> getAll() { return users; }
+
+    public Optional<UserDTO> findById(int id) {
+        return users.stream().filter(user -> user.getId() == id).findFirst();
+    }
+
+    public void add(UserDTO user) {
+        user.setId(nextId++);
+        users.add(user);
+    }
+
+    public void update(UserDTO updated, int id) {
+        users.stream()
+                .filter(user -> user.getId() == id)
+                .findFirst()
+                .ifPresent(user -> {
+                    user.setName(updated.getName());
+                });
+    }
+
+    public void delete(int id) {
+        Optional<UserDTO> userToDelete = findById(id);
+        userToDelete.ifPresent(user -> users.remove(user));
+    }
+
+}
+*/
