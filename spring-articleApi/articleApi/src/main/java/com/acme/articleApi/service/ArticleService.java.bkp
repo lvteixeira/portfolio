@@ -1,0 +1,53 @@
+/*
+package com.acme.articleApi.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.acme.articleApi.model.Article;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class ArticleService {
+    private ArrayList<Article> articles = new ArrayList<>();
+
+    private int nextId = 1;
+
+    private Article article;
+
+    public List<Article> getAll() {
+        return articles;
+    }
+
+    public Optional<Article> findById(int id) {
+        return articles.stream().filter(article -> article.getId() == id).findFirst();
+    }
+
+    public void add(Article article) {
+        article.setId(nextId++);
+        articles.add(article);
+    }
+
+    public void update(Article updated, int id) {
+        articles.stream()
+                .filter(article -> article.getId() == id)
+                .findFirst()
+                .ifPresent(article -> {
+                    article.setTitle(updated.getTitle());
+                    article.setBody(updated.getBody());
+                });
+    }
+
+    public void delete(int id) {
+        Optional<Article> articleToDelete = findById(id);
+        articleToDelete.ifPresent(article -> articles.remove(article));
+    }
+
+    public void clear() {
+        articles.clear();
+    }
+}
+*/

@@ -1,16 +1,18 @@
 package com.acme.articleApi.controller;
 
+import com.acme.articleApi.dto.ArticleDTO;
+import com.acme.articleApi.model.ArticleEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import com.acme.articleApi.service.ArticleService;
+
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(path = "/articles")
+@RequestMapping("articles")
 public class ArticlesController {
     //Dependency Injection
     private ArticleService articleService;
@@ -18,130 +20,56 @@ public class ArticlesController {
     @Autowired
     public ArticlesController(ArticleService articleService) {
         this.articleService = articleService;
-        //this.article = article;
-    }
-
-    //Article Model
-    public static class Article {
-        private int id;
-        private String title;
-        private String body;
-
-        public Article() {}
-
-        public Article(int id, String title, String body) {
-            this.id = id;
-            this.title = title;
-            this.body = body;
-        }
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public String getBody() {
-            return body;
-        }
-
-        public void setBody(String body) {
-            this.body = body;
-        }
-    }
-
-    //Article Service
-    @Service
-    public static class ArticleService {
-        private ArrayList<Article> articles = new ArrayList<>();
-        private int nextId = 1;
-
-        public List<Article> getAll() {
-            return articles;
-        }
-
-        public Optional<Article> findById(int id) {
-            return articles.stream().filter(article -> article.getId() == id).findFirst();
-        }
-
-        public void add(Article article) {
-            article.setId(nextId++);
-            articles.add(article);
-        }
-
-        public void update(Article updated, int id) {
-            articles.stream()
-                    .filter(article -> article.getId() == id)
-                    .findFirst()
-                    .ifPresent(article -> {
-                        article.setTitle(updated.getTitle());
-                        article.setBody(updated.getBody());
-                    });
-        }
-
-        public void delete(int id) {
-            int aIndex = id - 1;
-            articles.remove(aIndex);
-        }
-
-        public void clear(){
-            articles.clear();
-        }
     }
 
     //Article Controller
     @GetMapping
-    public ResponseEntity<List<Article>> getAllArticles() {
-        List<Article> articles = articleService.getAll();
-        return ResponseEntity.ok(articles);
+    public ResponseEntity<List<ArticleDTO>> getAllArticles() {
+        List<ArticleEntity> articles = articleService.getAll();
+        List<ArticleDTO> dtos = articleService.convertEntityListToDTOList(articles);
+        return ResponseEntity.ok(dtos);
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Article> getArticleById(@PathVariable("id") int id) {
-        Optional<Article> article = articleService.findById(id);
+    public ResponseEntity<ArticleDTO> getArticleById(@PathVariable("id") Long id) {
+        Optional<ArticleEntity> article = articleService.findById(id);
 
         if (article.isPresent()) {
-            return ResponseEntity.ok(article.get());
+            ArticleDTO dto = articleService.convertEntityToDTO(article.get());
+            return ResponseEntity.ok(dto);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
     @PostMapping
-    public ResponseEntity<Article> createArticle(@RequestBody Article article) {
-        articleService.add(article);
-        return ResponseEntity.ok(article);
+    public ResponseEntity<ArticleDTO> createArticle(@RequestBody ArticleDTO createPayload) {
+        ArticleEntity obj = articleService.convertDTOToEntity(createPayload);
+        articleService.add(obj);
+        ArticleDTO createdArticle = articleService.convertEntityToDTO(obj);
+        return ResponseEntity.status(201).body(createdArticle);
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Article> updateArticle(@PathVariable("id") int id, @RequestBody Article updatedArticle) {
-        Optional<Article> existingArticle = articleService.findById(id);
+    public ResponseEntity<Void> updateArticle(@PathVariable("id") Long id, @RequestBody ArticleDTO updatePayload) {
+        Optional<ArticleEntity> existingArticle = articleService.findById(id);
 
         if (existingArticle.isPresent()) {
-            articleService.update(updatedArticle, id);
-            return ResponseEntity.noContent().build();
+            ArticleEntity obj = articleService.convertDTOToEntity(updatePayload);
+            articleService.update(obj, id);
+            return ResponseEntity.status(204).build();
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> deleteArticle(@PathVariable("id") int id) {
-        Optional<Article> articleToDelete = articleService.findById(id);
+    public ResponseEntity<Void> deleteArticle(@PathVariable("id") Long id) {
+        Optional<ArticleEntity> articleToDelete = articleService.findById(id);
 
         if (articleToDelete.isPresent()) {
             articleService.delete(id);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.status(204).build();
         } else {
             return ResponseEntity.notFound().build();
         }

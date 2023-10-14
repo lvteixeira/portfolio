@@ -17,7 +17,19 @@ repositories {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.postgresql:postgresql:42.6.0'
+	implementation 'org.modelmapper:modelmapper:2.4.4'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'junit:junit:4.13'
+	testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.6.2")
+}
+
+test {
+	exclude 'com/acme/articleApi/**' //unit test not running auto when gradle build, comment so you can unit test...
+	testLogging {
+		events "failed", "passed", "skipped", "standardError","standardOut", "started"
+	}
 }
 
 tasks.named('test') {
